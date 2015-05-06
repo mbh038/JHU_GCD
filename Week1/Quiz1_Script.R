@@ -1,3 +1,21 @@
+
+##install and load required packages, if necessary
+
+install.packages(xlsx)
+install.packages(XML)
+install.packages(data.table)
+library(xlsx)
+library(XML)
+library(data.table)
+
+
+
+##Set working directory
+#to whichever directory has "data" as a sub-directory
+
+
+
+
 ##Answers to GCD, Quiz One
 
 #create sub-directory of the working dir called "data" if one does not exist already
@@ -71,8 +89,7 @@ if(!file.exists("./data/ngap.xlsx")){
 }
 
 
-#use xlsx package. Could also use others.eg Excel connect
-library(xlsx)
+
 ngap<-read.xlsx("./data/ngap.xlsx",sheetIndex=1,header=TRUE)
 #head(ngap)
 
@@ -125,33 +142,60 @@ if(!file.exists("./data/Idaho2006.csv")){
 
 DT<-fread("./data/Idaho2006.csv")
 
+#works
 a1<-tapply(DT$pwgtp15,DT$SEX,mean)
 a1
-t1<-system.time(tapply(DT$pwgtp15,DT$SEX,mean))
+t1<-system.time(
+        for(i in 1:1000){
+                a1<-tapply(DT$pwgtp15,DT$SEX,mean)      
+        }
+)
 t1
 
+#does not work
+#a2<-rowMeans(DT)[DT$SEX==1]; rowMeans(DT)[DT$SEX==2]
+#a2
+#t2<-system.time(rowMeans(DT)[DT$SEX==1]; rowMeans(DT)[DT$SEX==2])
+#t2
 
-a2<-rowMeans(DT)[DT$SEX==1]; rowMeans(DT)[DT$SEX==2]
-a2
-t2<-system.time(rowMeans(DT)[DT$SEX==1]; rowMeans(DT)[DT$SEX==2])
-t2
-
+#works
 a3<-sapply(split(DT$pwgtp15,DT$SEX),mean)
 a3
-t3<-system.time(sapply(split(DT$pwgtp15,DT$SEX),mean))
+t3<-system.time(
+        for(i in 1:1000){
+                a3<-sapply(split(DT$pwgtp15,DT$SEX),mean)      
+        }     
+)
 t3
 
-a4<-mean(DT$pwgtp15,by=DT$SEX)
-a4
-t4<-system.time(mean(DT$pwgtp15,by=DT$SEX))
-t4
+#does not calculate two means
+#a4<-mean(DT$pwgtp15,by=DT$SEX)
+#a4
+#t4<-system.time(mean(DT$pwgtp15,by=DT$SEX))
+#t4
 
+#works
 a5<-mean(DT[DT$SEX==1,]$pwgtp15); mean(DT[DT$SEX==2,]$pwgtp15)
 a5
-t5<-system.time(mean(DT[DT$SEX==1,]$pwgtp15); mean(DT[DT$SEX==2,]$pwgtp15))
+
+t5<-system.time(
+        for(i in 1:1000){
+                a5<-mean(DT[DT$SEX==1,]$pwgtp15); mean(DT[DT$SEX==2,]$pwgtp15)     
+        }
+)
 t5
 
+#works
 a6<-DT[,mean(pwgtp15),by=SEX]
 a6
-t6<-system.time(DT[,mean(pwgtp15),by=SEX])
-t6
+t6<-system.time(
+        for(i in 1:1000){
+                a6<-DT[,mean(pwgtp15),by=SEX]       
+        }
+)
+
+calc.times<-data.frame(c("t1","t3","t5","t6"),c(t1[1],t3[1],t5[1],t6[1])
+                       ,c(t1[2],t3[2],t5[2],t6[2]))
+names(calc.times)<-c("method","user.time","elapsed.time")
+arrange(calc.times,user.time)
+print(paste("The fasted method is",arrange(calc.times,user.time)[1,1],sep=" "))
