@@ -87,7 +87,7 @@ str(dat50)
 
 ## Q3
 #without sqldf
-un<-uique(acs$AGEP)
+un<-unique(acs$AGEP)
 str(un)
 summary(un)
 
@@ -123,7 +123,7 @@ if(!file.exists("data")){
 }
 
 #download data file into data file, unless it is already there.
-if(!file.exists("./data/qf.for")){
+if(!file.exists("./data/q5.for")){
            
         fileURL<-"https://d396qusza40orc.cloudfront.net/getdata%2Fwksst8110.for"
         download.file(fileURL,destfile="./data/q5.for")
