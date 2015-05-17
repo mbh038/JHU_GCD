@@ -6,6 +6,9 @@
 
 #create sub-directory of the working dir called "data" if one does not exist already
 
+setwd("C:/Users/Mike/Rspace/JHU_GCD/Project")
+
+
 if(file.exists("./data/HAR.csv")){
         print("data set already in ./data directory")
         df.Harus<-read.table("./data/HAR.csv",
@@ -24,7 +27,7 @@ if(!file.exists("./data/HAR.csv")){
         #file.rename(from="household_power_consumption.txt",to="./data/household_power_consumption.csv")
         
         ##read data from csv file into data frame DF
-        df.Harus<-read.table("./data/household_power_consumption.csv",
+        df.HAR<-read.table("./data/household_power_consumption.csv",
                        sep=";",
                        header=T,
                        stringsAsFactors=FALSE)

@@ -1,0 +1,29 @@
+---
+title: "GCDProjectNotes"
+author: "mbh038"
+date: "Saturday, May 16, 2015"
+output: html_document
+---
+
+* WALKING
+* WALKING_UPSTAIRS
+* WALKING_DOWNSTAIRS
+* SITTING
+* STANDING
+* LAYING
+
+setwd("C:/Users/Mike/Rspace/JHU_GCD/Project")
+ 
+##read in test and train data
+```{r read in X_test and X_train,cache=TRUE}
+Xtest<-read.table("./data/test/X_test.txt")
+Xtrain<-read.table("./data/train/X_train.txt")
+
+```             
+## Data structure
+```{r data structure,echo=FALSE}
+        df<-data.frame(c("X_test","y_test","subject_test"),
+                         c(nrow(Xtest),2947,2947),c(ncol(Xtest),1,1),c(16,NA,NA))
+        colnames(df)<-c("File","Rows","Columns","FW")
+        df
+```
