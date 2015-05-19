@@ -1,6 +1,6 @@
 Codebook.
 
-This codebook describes the data set contained in the file 
+This codebook describes the data set contained in the file JHU_GCD_Project_Means
 
 Subject: 1-30 : There were 30 subjects who carried out the trials, each denoted by an integer from 1 to 30.
 Activity: There are six of these : LAYING, SITTING, STANDING, WALKING, WALKING_DOWNSTAIRS and WALKING_UPSTAIRS
